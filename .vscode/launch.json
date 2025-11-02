@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug AoC2015-C",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/AoC2015-C",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopOnEntry": false,
+            "preLaunchTask": "build"
+        }
+    ]
+}

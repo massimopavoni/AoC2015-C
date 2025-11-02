@@ -1,5 +1,6 @@
 # AoC ignores
 resources/
+resources.c
 bin/
 
 ### C ###
