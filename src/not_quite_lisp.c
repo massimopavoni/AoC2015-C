@@ -1,10 +1,11 @@
 #include "not_quite_lisp.h"
+
 #include "random_utils.h"
 
 // ------------------------------------------------------------------------------------------------
 // Exports
 
-char *LastFloor(const char *input) {
+const char *last_floor(const char *input) {
   i16 floor = 0;
 
   // Simply go up and down
@@ -20,7 +21,7 @@ char *LastFloor(const char *input) {
   return TO_STRING("%d", floor);
 }
 
-char *BasementPosition(const char *input) {
+const char *basement_position(const char *input) {
   i16 floor = 0;
   u16 position = 0;
 
@@ -34,7 +35,7 @@ char *BasementPosition(const char *input) {
       floor--;
 
     if (floor == -1)
-      return TO_STRING("%d", position);
+      return TO_STRING("%u", position);
 
     input++;
   }

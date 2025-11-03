@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "types.h"
+#include "random_utils.h"
 
 #include "i_was_told_there_would_be_no_math.h"
 #include "not_quite_lisp.h"
+#include "perfectly_spherical_houses_in_a_vacuum.h"
 
 // ------------------------------------------------------------------------------------------------
 // Resources
@@ -38,7 +39,7 @@ static void initialize_resources() {
 }
 
 static int get_puzzle_index(const char *name) {
-  char *key[3] = {(char *)name, NULL, NULL};
+  const char *key[3] = {(char *)name, NULL, NULL};
 
   char *(*resource)[3] =
       bsearch(&key, PUZZLE_ANSWERS, PUZZLE_COUNT, sizeof(PUZZLE_ANSWERS[0]),
@@ -53,9 +54,9 @@ static int get_puzzle_index(const char *name) {
 // ------------------------------------------------------------------------------------------------
 // Functions
 
-static void pretty_solution(const char *puzzle, u8 part,
-                            char *(*solution)(const char *), const char *input,
-                            const char *answer) {
+static void pretty_solution(const char *puzzle, const u8 part,
+                            const char *(*const solution)(const char *),
+                            const char *input, const char *answer) {
   const char *solution_result = solution(input);
 
   if (strcmp(solution_result, answer) != 0) {
@@ -68,11 +69,11 @@ static void pretty_solution(const char *puzzle, u8 part,
 }
 
 static void pretty_solution_2(const u8 day, const char *puzzle,
-                              char *(*solution1)(const char *),
-                              char *(*solution2)(const char *)) {
+                              const char *(*const solution1)(const char *),
+                              const char *(*const solution2)(const char *)) {
   printf("Day %d: %s\n", day, puzzle);
 
-  int resource_index = get_puzzle_index(puzzle);
+  const int resource_index = get_puzzle_index(puzzle);
   const char *input = RESOURCES[resource_index + 1];
   char **answers = PUZZLE_ANSWERS[resource_index];
 
@@ -92,8 +93,13 @@ int main() {
 
   printf("AoC 2015 - C\n\n");
 
-  pretty_solution_2(1, "NotQuiteLisp", LastFloor, BasementPosition);
+  pretty_solution_2(1, "NotQuiteLisp", last_floor, basement_position);
 
-  pretty_solution_2(2, "IWasToldThereWouldBeNoMath", TotalWrappingPaper,
-                    TotalRibbon);
+  pretty_solution_2(2, "IWasToldThereWouldBeNoMath", total_wrapping_paper,
+                    total_ribbon);
+
+  pretty_solution_2(3, "PerfectlySphericalHousesInAVacuum", santa_house_count,
+                    santa_and_robo_santa_house_count);
+
+  return EXIT_SUCCESS;
 }

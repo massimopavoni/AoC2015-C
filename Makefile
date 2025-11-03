@@ -1,18 +1,22 @@
 -include config.mk
 
+# Resources
 ROUT = $(wildcard src/resources/*.out)
 RINS = $(wildcard src/resources/*.in)
 RSRC = src/resources.c
 
+# Sources and objects
 SRCS = $(RSRC) $(filter-out $(RSRC), $(wildcard src/*.c))
 OBJS = $(SRCS:src/%.c=bin/%.o)
 
+# Build rules
 all: $(RSRC) $(TARGET)
 
 $(TARGET): $(OBJS)
 	mkdir -p bin
 	$(CC) $^ $(LDFLAGS) -o bin/$@
 
+# Resources embedding
 $(RSRC): $(ROUT) $(RINS)
 	@{ \
 		echo '#include "resources.h"'; \
@@ -25,7 +29,7 @@ $(RSRC): $(ROUT) $(RINS)
 	} > $@
 
 bin/%.o: src/%.c
-	mkdir -p bin
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 install: $(TARGET)
