@@ -6,7 +6,7 @@
 // Functions
 
 static char *unique_house_count(const char *input, const bool robo_santa) {
-  u8 seen[256][256] = {0};
+  bool seen[256][256] = {false};
 
   u8 santa_x = 127, santa_y = 127;
   u8 robo_x = 127, robo_y = 127;
