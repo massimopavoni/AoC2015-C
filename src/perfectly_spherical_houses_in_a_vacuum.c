@@ -12,7 +12,7 @@ static char *unique_house_count(const char *input, const bool robo_santa) {
   u8 robo_x = 127, robo_y = 127;
 
   seen[santa_x][santa_y] = true;
-  u16 unique_house_count = 1;
+  u16 unique_houses_count = 1;
 
   u8 *x = &santa_x, *y = &santa_y;
 
@@ -36,7 +36,7 @@ static char *unique_house_count(const char *input, const bool robo_santa) {
 
     if (!seen[*x][*y]) {
       seen[*x][*y] = true;
-      unique_house_count++;
+      unique_houses_count++;
     }
 
     if (robo_santa) {
@@ -53,7 +53,7 @@ static char *unique_house_count(const char *input, const bool robo_santa) {
     input++;
   }
 
-  return TO_STRING("%u", unique_house_count);
+  return TO_STRING("%u", unique_houses_count);
 }
 
 // ------------------------------------------------------------------------------------------------

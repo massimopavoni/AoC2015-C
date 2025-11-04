@@ -23,7 +23,7 @@ $(RSRC): $(ROUT) $(RINS)
 		echo ''; \
 		echo 'const char* RESOURCES[] = {'; \
 		for res in $^; do \
-			echo "  \"$$(awk '{ gsub(/\\/,"\\\\"); gsub(/"/,"\\\""); printf "%s\\n", $$0 }' "$$res" | tr -d '\n')\","; \
+			echo "  \"$$(perl -0777 -pe 's/\\/\\\\/g; s/"/\\"/g; chomp; s/\n/\\n/g' "$$res")\","; \
 		done; \
 		echo '};'; \
 	} > $@

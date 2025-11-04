@@ -1,6 +1,8 @@
 # AoC ignores
 resources/
 resources.c
+src/external/*
+!src/external/md5/
 bin/
 
 ### C ###

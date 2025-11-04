@@ -7,6 +7,7 @@
 #include "i_was_told_there_would_be_no_math.h"
 #include "not_quite_lisp.h"
 #include "perfectly_spherical_houses_in_a_vacuum.h"
+#include "the_ideal_stocking_stuffer.h"
 
 // ------------------------------------------------------------------------------------------------
 // Resources
@@ -100,6 +101,9 @@ int main() {
 
   pretty_solution_2(3, "PerfectlySphericalHousesInAVacuum", santa_house_count,
                     santa_and_robo_santa_house_count);
+
+  pretty_solution_2(4, "TheIdealStockingStuffer", five_zeros_hash_nonce,
+                    six_zeros_hash_nonce);
 
   return EXIT_SUCCESS;
 }

@@ -1,1 +1,5 @@
+# Project headers
 -Isrc/include
+
+# External libraries
+-Isrc/external/md5
