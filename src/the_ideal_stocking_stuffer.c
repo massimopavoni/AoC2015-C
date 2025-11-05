@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "md5.h"
+
 #include "random_utils.h"
 
 // ------------------------------------------------------------------------------------------------
@@ -19,6 +20,7 @@ static const char *find_hash_nonce(const char *input, const u8 zeros) {
   const u8 base_len = strlen(input);
   u32 answer = 0;
 
+  // OpenMP speeds this up significantly
 #pragma omp parallel shared(answer)
   {
     char string[32];
