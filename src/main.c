@@ -4,6 +4,7 @@
 
 #include "random_utils.h"
 
+#include "doesnt_he_have_intern_elves_for_this.h"
 #include "i_was_told_there_would_be_no_math.h"
 #include "not_quite_lisp.h"
 #include "perfectly_spherical_houses_in_a_vacuum.h"
@@ -104,6 +105,9 @@ int main() {
 
   pretty_solution_2(4, "TheIdealStockingStuffer", five_zeros_hash_nonce,
                     six_zeros_hash_nonce);
+
+  pretty_solution_2(5, "DoesntHeHaveInternElvesForThis", nice_strings_count,
+                    fixed_nice_strings_count);
 
   return EXIT_SUCCESS;
 }

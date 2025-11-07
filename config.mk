@@ -18,7 +18,8 @@ LDFLAGS ?= -s
 LDFLAGS += -fopenmp
 
 # External libraries
-LDFLAGS += -lcrypto
+LDFLAGS += src/external/md5/libmd5.a
+LDFLAGS += -lpcre2-8
 
 # Target
 TARGET ?= AoC2015-C
