@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/time.h>
 
 #include "random_utils.h"
 
@@ -8,7 +9,13 @@
 #include "i_was_told_there_would_be_no_math.h"
 #include "not_quite_lisp.h"
 #include "perfectly_spherical_houses_in_a_vacuum.h"
+#include "probably_a_fire_hazard.h"
 #include "the_ideal_stocking_stuffer.h"
+
+// ------------------------------------------------------------------------------------------------
+// Globals
+
+static bool SELECTED_PUZZLES[25] = {false};
 
 // ------------------------------------------------------------------------------------------------
 // Resources
@@ -16,7 +23,7 @@
 #include "resources.h"
 
 static char *PUZZLE_ANSWERS[25][3];
-static int PUZZLE_COUNT = 0;
+static u8 PUZZLE_COUNT = 0;
 
 static int compare_puzzle_names(const void *a, const void *b) {
   return strcmp(((const char **)a)[0], ((const char **)b)[0]);
@@ -40,15 +47,12 @@ static void initialize_resources() {
         compare_puzzle_names);
 }
 
-static int get_puzzle_index(const char *name) {
+static u8 get_puzzle_index(const char *name) {
   const char *key[3] = {(char *)name, NULL, NULL};
 
   char *(*resource)[3] =
       bsearch(&key, PUZZLE_ANSWERS, PUZZLE_COUNT, sizeof(PUZZLE_ANSWERS[0]),
               compare_puzzle_names);
-
-  if (!resource)
-    return -1;
 
   return resource - PUZZLE_ANSWERS;
 }
@@ -59,7 +63,14 @@ static int get_puzzle_index(const char *name) {
 static void pretty_solution(const char *puzzle, const u8 part,
                             const char *(*const solution)(const char *),
                             const char *input, const char *answer) {
+  struct timeval current_time;
+  gettimeofday(&current_time, NULL);
+  u64 microseconds = current_time.tv_usec;
+
   const char *solution_result = solution(input);
+
+  gettimeofday(&current_time, NULL);
+  microseconds = current_time.tv_usec - microseconds;
 
   if (strcmp(solution_result, answer) != 0) {
     fprintf(stderr, "Wrong solution for %s part %d: expected %s, but got %s\n",
@@ -67,15 +78,18 @@ static void pretty_solution(const char *puzzle, const u8 part,
     exit(EXIT_FAILURE);
   }
 
-  printf("%d -> %s\n", part, answer);
+  printf("%d -> %s (%luμs)\n", part, answer, microseconds);
 }
 
 static void pretty_solution_2(const u8 day, const char *puzzle,
                               const char *(*const solution1)(const char *),
                               const char *(*const solution2)(const char *)) {
+  if (!SELECTED_PUZZLES[day - 1])
+    return;
+
   printf("Day %d: %s\n", day, puzzle);
 
-  const int resource_index = get_puzzle_index(puzzle);
+  const u8 resource_index = get_puzzle_index(puzzle);
   const char *input = RESOURCES[resource_index + 1];
   char **answers = PUZZLE_ANSWERS[resource_index];
 
@@ -90,7 +104,13 @@ static void pretty_solution_2(const u8 day, const char *puzzle,
 // ------------------------------------------------------------------------------------------------
 // Exports
 
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc == 1)
+    memset(SELECTED_PUZZLES, true, sizeof(SELECTED_PUZZLES));
+
+  for (int a = 1; a < argc; a++)
+    SELECTED_PUZZLES[atoi(argv[a]) - 1] = true;
+
   initialize_resources();
 
   printf("AoC 2015 - C\n\n");
@@ -108,6 +128,9 @@ int main() {
 
   pretty_solution_2(5, "DoesntHeHaveInternElvesForThis", nice_strings_count,
                     fixed_nice_strings_count);
+
+  pretty_solution_2(6, "ProbablyAFireHazard", lights_on_count,
+                    lights_total_brightness);
 
   return EXIT_SUCCESS;
 }
