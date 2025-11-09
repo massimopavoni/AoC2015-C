@@ -12,8 +12,6 @@
 
 static const char *matching_strings_count(const char *input,
                                           const char *pattern) {
-  char *strings = strdup(input);
-
   int error_code;
   PCRE2_SIZE error_offset;
   pcre2_code *regex = pcre2_compile((PCRE2_SPTR)pattern, PCRE2_ZERO_TERMINATED,
@@ -22,17 +20,22 @@ static const char *matching_strings_count(const char *input,
       pcre2_match_data_create_from_pattern(regex, NULL);
 
   u16 count = 0;
-  char *string = strtok(strings, "\n");
+  char *next;
+  u8 len;
 
-  while (string != NULL) {
-    if (pcre2_match(regex, (PCRE2_SPTR)string, strlen(string), 0, 0, match_data,
-                    NULL) >= 0)
+  while (*input) {
+    next = strchr(input, '\n');
+    len = next == NULL ? strlen(input) : next - input;
+
+    if (pcre2_match(regex, (PCRE2_SPTR)input, len, 0, 0, match_data, NULL) >= 0)
       count++;
 
-    string = strtok(NULL, "\n");
+    if (next == NULL)
+      break;
+
+    input += len + 1;
   }
 
-  free(strings);
   pcre2_code_free(regex);
   pcre2_match_data_free(match_data);
 
