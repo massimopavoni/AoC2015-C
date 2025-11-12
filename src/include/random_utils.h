@@ -29,3 +29,12 @@ typedef int64_t i64;
     sprintf(buffer, format, x);                                                \
     buffer;                                                                    \
   })
+
+#define PARSE_INT(input, var)                                                  \
+  ({                                                                           \
+    while ('0' <= *input && *input <= '9') {                                   \
+      var *= 10;                                                               \
+      var += *input - '0';                                                     \
+      input++;                                                                 \
+    }                                                                          \
+  })

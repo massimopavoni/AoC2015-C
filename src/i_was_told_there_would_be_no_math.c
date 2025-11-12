@@ -3,34 +3,6 @@
 #include "random_utils.h"
 
 // ------------------------------------------------------------------------------------------------
-// Parsers
-
-static u32 parse_presents(const char *input, u32 presents[1024][3]) {
-  u32 present = 0, dimension;
-
-  while (*input) {
-    dimension = 0;
-
-    while (dimension < 3 && *input) {
-      presents[present][dimension] = 0;
-
-      while ('0' <= *input && *input <= '9') {
-        presents[present][dimension] *= 10;
-        presents[present][dimension] += *input - '0';
-        input++;
-      }
-
-      dimension++;
-      input++;
-    }
-
-    present++;
-  }
-
-  return present;
-}
-
-// ------------------------------------------------------------------------------------------------
 // Functions
 
 static inline u32 wrapping_paper_cost(const u32 a, const u32 b, const u32 c) {
@@ -46,16 +18,26 @@ static inline u32 ribbon_cost(const u32 a, const u32 b, const u32 c) {
 }
 
 static char *total_cost(const char *input, bool wrapping_or_ribbon) {
-  u32 presents[1024][3];
-  const u32 presents_total = parse_presents(input, presents);
-  u32 total = 0;
+  u32 dimensions[3];
+  u32 dimension, total = 0;
 
-  // Sum up all costs
-  for (u16 p = 0; p < presents_total; p++)
-    total += wrapping_or_ribbon
-                 ? wrapping_paper_cost(presents[p][0], presents[p][1],
-                                       presents[p][2])
-                 : ribbon_cost(presents[p][0], presents[p][1], presents[p][2]);
+  while (*input) {
+    dimension = 0;
+
+    while (dimension < 3 && *input) {
+      dimensions[dimension] = 0;
+
+      PARSE_INT(input, dimensions[dimension]);
+
+      dimension++;
+      input++;
+    }
+
+    total +=
+        wrapping_or_ribbon
+            ? wrapping_paper_cost(dimensions[0], dimensions[1], dimensions[2])
+            : ribbon_cost(dimensions[0], dimensions[1], dimensions[2]);
+  }
 
   return TO_STRING("%u", total);
 }

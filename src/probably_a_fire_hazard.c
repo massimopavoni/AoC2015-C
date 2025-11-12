@@ -12,16 +12,16 @@ enum Operation { TURN_OFF, TURN_ON, TOGGLE };
 // ------------------------------------------------------------------------------------------------
 // Functions
 
-static void light_off_on(u8 *light, const enum Operation op) {
+static inline void light_off_on(u8 *light, const enum Operation op) {
   *light = op == TURN_OFF ? 0 : (op == TURN_ON ? 1 : !(*light));
 }
 
-static void light_brightness(u8 *light, const enum Operation op) {
+static inline void light_brightness(u8 *light, const enum Operation op) {
   *light += op == TURN_OFF ? (*light > 0 ? -1 : 0) : (op == TURN_ON ? 1 : 2);
 }
 
-const char *result_after_light_instructions(const char *input,
-                                            bool off_on_or_brightness) {
+static const char *result_after_light_instructions(const char *input,
+                                                   bool off_on_or_brightness) {
   u8 lights[1000][1000] = {0};
   enum Operation op;
   u16 rectangle_coords[4];
@@ -52,11 +52,7 @@ const char *result_after_light_instructions(const char *input,
         input += 9;
       }
 
-      while ('0' <= *input && *input <= '9') {
-        rectangle_coords[current_coord] *= 10;
-        rectangle_coords[current_coord] += *input - '0';
-        input++;
-      }
+      PARSE_INT(input, rectangle_coords[current_coord]);
     }
 
     for (x = rectangle_coords[0]; x <= rectangle_coords[2]; x++)
