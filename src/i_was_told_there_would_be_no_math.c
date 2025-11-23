@@ -24,7 +24,7 @@ static char *total_cost(const char *input, bool wrapping_or_ribbon) {
   while (*input) {
     dimension = 0;
 
-    while (dimension < 3 && *input) {
+    while (dimension < 3) {
       dimensions[dimension] = 0;
 
       PARSE_INT(input, dimensions[dimension]);

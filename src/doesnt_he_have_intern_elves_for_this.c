@@ -25,7 +25,7 @@ static const char *matching_strings_count(const char *input,
 
   while (*input) {
     next = strchr(input, '\n');
-    len = next == NULL ? strlen(input) : next - input;
+    len = next == NULL ? strlen(input) : (size_t)(next - input);
 
     if (pcre2_match(regex, (PCRE2_SPTR)input, len, 0, 0, match_data, NULL) >= 0)
       count++;

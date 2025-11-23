@@ -10,6 +10,7 @@
 #include "not_quite_lisp.h"
 #include "perfectly_spherical_houses_in_a_vacuum.h"
 #include "probably_a_fire_hazard.h"
+#include "some_assembly_required.h"
 #include "the_ideal_stocking_stuffer.h"
 
 // ------------------------------------------------------------------------------------------------
@@ -131,6 +132,8 @@ int main(int argc, char *argv[]) {
 
   pretty_solution_2(6, "ProbablyAFireHazard", lights_on_count,
                     lights_total_brightness);
+
+  pretty_solution_2(7, "SomeAssemblyRequired", wire_a_signal, rewired_a_signal);
 
   return EXIT_SUCCESS;
 }
