@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sys/time.h>
 
+#include "matchsticks.h"
 #include "random_utils.h"
 
 #include "doesnt_he_have_intern_elves_for_this.h"
@@ -134,6 +135,9 @@ int main(int argc, char *argv[]) {
                     lights_total_brightness);
 
   pretty_solution_2(7, "SomeAssemblyRequired", wire_a_signal, rewired_a_signal);
+
+  pretty_solution_2(8, "Matchsticks", code_chars_minus_memory_chars,
+                    encoded_chars_minus_code_chars);
 
   return EXIT_SUCCESS;
 }
