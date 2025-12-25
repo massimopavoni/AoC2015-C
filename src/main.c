@@ -3,11 +3,12 @@
 #include <string.h>
 #include <sys/time.h>
 
-#include "matchsticks.h"
 #include "random_utils.h"
 
+#include "all_in_a_single_night.h"
 #include "doesnt_he_have_intern_elves_for_this.h"
 #include "i_was_told_there_would_be_no_math.h"
+#include "matchsticks.h"
 #include "not_quite_lisp.h"
 #include "perfectly_spherical_houses_in_a_vacuum.h"
 #include "probably_a_fire_hazard.h"
@@ -138,6 +139,9 @@ int main(int argc, char *argv[]) {
 
   pretty_solution_2(8, "Matchsticks", code_chars_minus_memory_chars,
                     encoded_chars_minus_code_chars);
+
+  pretty_solution_2(9, "AllInASingleNight", travelling_santa_shortest_distance,
+                    travelling_santa_longest_distance);
 
   return EXIT_SUCCESS;
 }

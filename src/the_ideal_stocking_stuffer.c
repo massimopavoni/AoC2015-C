@@ -22,6 +22,7 @@ static const char *find_hash_nonce(const char *input, const u8 zeros) {
   const size_t base_len = strlen(input);
   _Atomic u32 answer = 0;
 
+  // Find best early nonce using an atomic variable and parallel threads
 #pragma omp parallel
   {
     char string[64];
@@ -69,11 +70,9 @@ static const char *find_hash_nonce(const char *input, const u8 zeros) {
 // Exports
 
 const char *five_zeros_hash_nonce(const char *input) {
-  // Find nonce with hash starting with five zeros
   return find_hash_nonce(input, 5);
 }
 
 const char *six_zeros_hash_nonce(const char *input) {
-  // Find nonce with hash starting with six zeros
   return find_hash_nonce(input, 6);
 }

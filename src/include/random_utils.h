@@ -34,7 +34,7 @@ typedef int64_t i64;
   ({                                                                           \
     while ('0' <= *input && *input <= '9') {                                   \
       var *= 10;                                                               \
-      var += *input - '0';                                                     \
+      var += *input & 0xf;                                                     \
       input++;                                                                 \
     }                                                                          \
   })
